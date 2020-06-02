@@ -32,6 +32,7 @@ public class StringWriterDemo {
                         .setSchema(schema));
         VectorizedRowBatch batch = schema.createRowBatch();
         BytesColumnVector x = (BytesColumnVector) batch.cols[0];
+        //这种情况重复率不高，使用DIRECT_V2编码
         for(int r=0; r < 2; ++r) {
             int row = batch.size++;
             byte[] buffer = ("a" + r).getBytes(StandardCharsets.UTF_8);
@@ -42,6 +43,18 @@ public class StringWriterDemo {
                 batch.reset();
             }
         }
+        //这种情况重复率高，使用字典编码
+//        for(int r=0; r < 2; ++r) {
+//            int row = batch.size++;
+//            byte[] buffer = ("a" + r).getBytes(StandardCharsets.UTF_8);
+//            x.setRef(row, buffer, 0, buffer.length);
+//            // If the batch is full, write it out and start over.
+//            if (batch.size == batch.getMaxSize()) {
+//                writer.addRowBatch(batch);
+//                batch.reset();
+//            }
+//        }
+
         if (batch.size != 0) {
             writer.addRowBatch(batch);
         }
