@@ -122,7 +122,7 @@ public class WriterImpl implements WriterInternal, MemoryManager.Callback {
   private final OrcFile.BloomFilterVersion bloomFilterVersion;
   private final boolean writeTimeZone;
   private final boolean useUTCTimeZone;
-  private final double dictionaryKeySizeThreshold;
+  private final double dictionaryKeySizeThreshold;//使用字典编码的阈值
   private final boolean[] directEncodingColumns;
   private final List<OrcProto.ColumnEncoding> unencryptedEncodings =
       new ArrayList<>();

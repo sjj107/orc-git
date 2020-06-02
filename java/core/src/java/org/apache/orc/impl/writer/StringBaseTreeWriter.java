@@ -55,7 +55,7 @@ public abstract class StringBaseTreeWriter extends TreeWriterBase {
   // If the number of keys in a dictionary is greater than this fraction of
   //the total number of non-null rows, turn off dictionary encoding
   private final double dictionaryKeySizeThreshold;
-  protected boolean useDictionaryEncoding = true;
+  protected boolean useDictionaryEncoding = true;//是否使用字典编码，只对字符串类型生效
   private boolean isDirectV2 = true;
   private boolean doneDictionaryCheck;
   private final boolean strideDictionaryCheck;

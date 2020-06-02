@@ -25,6 +25,7 @@ import org.apache.hadoop.io.Text;
 /**
  * A red-black tree that stores strings. The strings are stored as UTF-8 bytes
  * and an offset for each entry.
+ * 存储字符串的红黑树。字符串存储为UTF-8字节和每个条目的偏移量。
  */
 public class StringRedBlackTree extends RedBlackTree {
   private final DynamicByteArray byteArray = new DynamicByteArray();

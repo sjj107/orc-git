@@ -22,6 +22,7 @@ package org.apache.orc.impl;
  * A memory efficient red-black tree that does not allocate any objects per
  * an element. This class is abstract and assumes that the child class
  * handles the key and comparisons with the key.
+ * 一种内存有效的红黑树，它不为每个元素分配任何对象。这个类是抽象的，并假设子类处理键和与键的比较。
  */
 abstract class RedBlackTree {
   public static final int NULL = -1;
