@@ -126,7 +126,7 @@ public class RunLengthIntegerWriterV2 implements IntegerWriter {
   static final int MIN_REPEAT = 3;
   private static final int MAX_SHORT_REPEAT_LENGTH = 10;
   private long prevDelta = 0;
-  private int fixedRunLength = 0;
+  private int fixedRunLength = 0;//记录重复值的个数
   private int variableRunLength = 0;
   private final long[] literals = new long[MAX_SCOPE];
   private final PositionedOutputStream output;
