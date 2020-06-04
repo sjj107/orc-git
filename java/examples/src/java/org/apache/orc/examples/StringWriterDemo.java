@@ -24,7 +24,7 @@ public class StringWriterDemo {
 
     public static void main(Configuration conf, String[] args) throws IOException {
         LocalFileSystem local = FileSystem.getLocal(conf);
-        local.delete(new Path("string-file.orc"),true);
+        local.delete(new Path("string-file.orc"), true);
         TypeDescription schema =
                 TypeDescription.fromString("struct<x:string>");
         Writer writer = OrcFile.createWriter(new Path("string-file.orc"),
@@ -33,9 +33,12 @@ public class StringWriterDemo {
         VectorizedRowBatch batch = schema.createRowBatch();
         BytesColumnVector x = (BytesColumnVector) batch.cols[0];
         //这种情况重复率不高，使用DIRECT_V2编码
-        for(int r=0; r < 2; ++r) {
+//        String[] datas = {"01", "234"};
+        //这种情况重复率高，使用字典编码
+        String [] datas = {"a","a"};
+        for (String data : datas) {
             int row = batch.size++;
-            byte[] buffer = ("a" + r).getBytes(StandardCharsets.UTF_8);
+            byte[] buffer = data.getBytes(StandardCharsets.UTF_8);
             x.setRef(row, buffer, 0, buffer.length);
             // If the batch is full, write it out and start over.
             if (batch.size == batch.getMaxSize()) {
@@ -43,17 +46,6 @@ public class StringWriterDemo {
                 batch.reset();
             }
         }
-        //这种情况重复率高，使用字典编码
-//        for(int r=0; r < 2; ++r) {
-//            int row = batch.size++;
-//            byte[] buffer = ("a").getBytes(StandardCharsets.UTF_8);
-//            x.setRef(row, buffer, 0, buffer.length);
-//            // If the batch is full, write it out and start over.
-//            if (batch.size == batch.getMaxSize()) {
-//                writer.addRowBatch(batch);
-//                batch.reset();
-//            }
-//        }
 
         if (batch.size != 0) {
             writer.addRowBatch(batch);
