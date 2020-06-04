@@ -139,7 +139,7 @@ public abstract class StringBaseTreeWriter extends TreeWriterBase {
       // Write the dictionary by traversing the red-black tree writing out
       // the bytes and lengths; and creating the map from the original order
       // to the final sorted order.
-
+      //通过遍历红黑树写出字节和长度来编写字典;并创建从原始顺序到最终排序顺序的映射。
       dictionary.visit(new StringRedBlackTree.Visitor() {
         private int currentId = 0;
 
