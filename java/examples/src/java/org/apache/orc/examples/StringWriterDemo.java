@@ -46,7 +46,7 @@ public class StringWriterDemo {
         //这种情况重复率高，使用字典编码
 //        for(int r=0; r < 2; ++r) {
 //            int row = batch.size++;
-//            byte[] buffer = ("a" + r).getBytes(StandardCharsets.UTF_8);
+//            byte[] buffer = ("a").getBytes(StandardCharsets.UTF_8);
 //            x.setRef(row, buffer, 0, buffer.length);
 //            // If the batch is full, write it out and start over.
 //            if (batch.size == batch.getMaxSize()) {
