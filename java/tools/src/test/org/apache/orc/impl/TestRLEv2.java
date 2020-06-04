@@ -45,6 +45,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+//sjj importent
 public class TestRLEv2 {
   Path workDir = new Path(System.getProperty("test.tmp.dir",
       "target" + File.separator + "test" + File.separator + "tmp"));
@@ -92,6 +93,7 @@ public class TestRLEv2 {
     FileDump.main(new String[]{testFilePath.toUri().toString()});
     System.out.flush();
     String outDump = new String(myOut.toByteArray(), StandardCharsets.UTF_8);
+    System.out.println(outDump);
     // 10 runs of 512 elements. Each run has 2 bytes header, 2 bytes base (base = 123,
     // zigzag encoded varint) and 1 byte delta (delta = 0). In total, 5 bytes per run.
     assertEquals(true, outDump.contains("Stream: column 0 section DATA start: 3 length 50"));
