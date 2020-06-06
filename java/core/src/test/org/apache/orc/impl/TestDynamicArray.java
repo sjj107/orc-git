@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+//sjj importent
 public class TestDynamicArray {
 
   @Test
