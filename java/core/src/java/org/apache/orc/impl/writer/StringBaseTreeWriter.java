@@ -41,13 +41,13 @@ import java.util.function.Consumer;
 
 public abstract class StringBaseTreeWriter extends TreeWriterBase {
   private static final int INITIAL_DICTIONARY_SIZE = 4096;
-  private final OutStream stringOutput;
-  protected final IntegerWriter lengthOutput;
-  private final IntegerWriter rowOutput;
+  private final OutStream stringOutput;//字节流用于存储字典值
+  protected final IntegerWriter lengthOutput;//整形流用于存储字典中每个词条的长度
+  private final IntegerWriter rowOutput;//整形流用于记录字段值
   protected final StringRedBlackTree dictionary =
       new StringRedBlackTree(INITIAL_DICTIONARY_SIZE);
   protected final DynamicIntArray rows = new DynamicIntArray();
-  protected final PositionedOutputStream directStreamOutput;
+  protected final PositionedOutputStream directStreamOutput;//直接输出的流
   private final List<OrcProto.RowIndexEntry> savedRowIndex =
       new ArrayList<>();
   private final boolean buildIndex;
