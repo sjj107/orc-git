@@ -35,7 +35,7 @@ public class StringWriterDemo {
         //这种情况重复率不高，使用DIRECT_V2编码
 //        String[] datas = {"01", "234"};
         //这种情况重复率高，使用字典编码
-        String [] datas = {"a","a"};
+        String[] datas = {"ab", "ab", "ab", "cd"};
         for (String data : datas) {
             int row = batch.size++;
             byte[] buffer = data.getBytes(StandardCharsets.UTF_8);
