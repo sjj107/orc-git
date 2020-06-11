@@ -46,7 +46,7 @@ public abstract class StringBaseTreeWriter extends TreeWriterBase {
   private final IntegerWriter rowOutput;//整形流用于记录字段值
   protected final StringRedBlackTree dictionary =
       new StringRedBlackTree(INITIAL_DICTIONARY_SIZE);
-  protected final DynamicIntArray rows = new DynamicIntArray();
+  protected final DynamicIntArray rows = new DynamicIntArray();//sjj 字段下标信息
   protected final PositionedOutputStream directStreamOutput;//直接输出的流
   private final List<OrcProto.RowIndexEntry> savedRowIndex =
       new ArrayList<>();

@@ -517,7 +517,7 @@ public class WriterImpl implements WriterInternal, MemoryManager.Callback {
       treeWriter.flushStreams();
       treeWriter.writeStripe(requiredIndexEntries);
       // update the encodings
-      builder.addAllColumns(unencryptedEncodings);
+      builder.addAllColumns(unencryptedEncodings);//sjj kind: DIRECT,  kind: DICTIONARY_V2 dictionarySize: 2
       unencryptedEncodings.clear();
       for (WriterEncryptionVariant writerEncryptionVariant : encryption) {
         OrcProto.StripeEncryptionVariant.Builder encrypt =

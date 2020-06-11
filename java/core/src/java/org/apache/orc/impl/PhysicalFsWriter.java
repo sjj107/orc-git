@@ -318,7 +318,7 @@ public class PhysicalFsWriter implements PhysicalWriter {
   private void writeStripeFooter(OrcProto.StripeFooter footer,
                                  SizeCounters sizes,
                                  OrcProto.StripeInformation.Builder dirEntry) throws IOException {
-    footer.writeTo(codedCompressStream);
+    footer.writeTo(codedCompressStream);//sjj streams {  kind: ROW_INDEX  column: 0  length: 11}streams {  kind: ROW_INDEX  column: 1  length: 28}streams {  kind: DATA  column: 1  length: 8}streams {  kind: LENGTH  column: 1  length: 6}streams {  kind: DICTIONARY_DATA  column: 1  length: 7}columns {  kind: DIRECT}columns {  kind: DICTIONARY_V2  dictionarySize: 2}
     codedCompressStream.flush();
     compressStream.flush();
     dirEntry.setOffset(stripeStart);
