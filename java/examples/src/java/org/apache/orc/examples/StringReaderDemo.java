@@ -4,6 +4,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.ql.exec.vector.BytesColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
+import org.apache.hadoop.hive.ql.io.sarg.PredicateLeaf;
+import org.apache.hadoop.hive.ql.io.sarg.SearchArgumentFactory;
 import org.apache.orc.OrcFile;
 import org.apache.orc.Reader;
 import org.apache.orc.RecordReader;
@@ -30,13 +32,17 @@ public class StringReaderDemo {
         // Read the row data
         VectorizedRowBatch batch = readSchema.createRowBatch();
         RecordReader rowIterator = reader.rows(reader.options()
+//                .searchArgument(SearchArgumentFactory.newBuilder().equals("x", PredicateLeaf.Type.STRING, "ab").build(), new String[]{"x"})
                 .schema(readSchema));
         BytesColumnVector x = (BytesColumnVector) batch.cols[0];
+        int num = 0;
         while (rowIterator.nextBatch(batch)) {
             for (int row = 0; row < batch.size; ++row) {
                 System.out.println("x: " + x.toString(row));
+                num++;
             }
         }
+        System.out.println("num: " + num);
         rowIterator.close();
     }
 }

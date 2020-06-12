@@ -47,6 +47,23 @@ public class StringWriterDemo {
             }
         }
 
+
+//        //以下测试是为了StringReaderDemo使用searchArgument，稀疏索引：只能按照rowgroup（10000条数据）来过滤
+//        for (int i = 0; i < 40000; i++) {
+//            int row = batch.size++;
+//            byte[] buffer = "a".getBytes(StandardCharsets.UTF_8);
+//            x.setRef(row, buffer, 0, buffer.length);
+//            // If the batch is full, write it out and start over.
+//            if (batch.size == batch.getMaxSize()) {
+//                writer.addRowBatch(batch);
+//                batch.reset();
+//            }
+//        }
+//        int row = batch.size++;
+//        byte[] buffer = "ab".getBytes(StandardCharsets.UTF_8);
+//        x.setRef(row, buffer, 0, buffer.length);
+//        //以下测试是为了StringReaderDemo使用searchArgument，稀疏索引：只能按照rowgroup（10000条数据）来过滤
+
         if (batch.size != 0) {
             writer.addRowBatch(batch);
         }
