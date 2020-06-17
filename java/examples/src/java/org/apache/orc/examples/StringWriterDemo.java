@@ -34,24 +34,11 @@ public class StringWriterDemo {
         BytesColumnVector x = (BytesColumnVector) batch.cols[0];
         //这种情况重复率不高，使用DIRECT_V2编码
 //        String[] datas = {"01", "234"};
-        //这种情况重复率高，使用字典编码
-        String[] datas = {"ab", "ab", "ab", "cd"};
-        for (String data : datas) {
-            int row = batch.size++;
-            byte[] buffer = data.getBytes(StandardCharsets.UTF_8);
-            x.setRef(row, buffer, 0, buffer.length);
-            // If the batch is full, write it out and start over.
-            if (batch.size == batch.getMaxSize()) {
-                writer.addRowBatch(batch);
-                batch.reset();
-            }
-        }
-
-
-//        //以下测试是为了StringReaderDemo使用searchArgument，稀疏索引：只能按照rowgroup（10000条数据）来过滤
-//        for (int i = 0; i < 40000; i++) {
+//        //这种情况重复率高，使用字典编码
+//        String[] datas = {"ab", "ab", "ab", "cd"};
+//        for (String data : datas) {
 //            int row = batch.size++;
-//            byte[] buffer = "a".getBytes(StandardCharsets.UTF_8);
+//            byte[] buffer = data.getBytes(StandardCharsets.UTF_8);
 //            x.setRef(row, buffer, 0, buffer.length);
 //            // If the batch is full, write it out and start over.
 //            if (batch.size == batch.getMaxSize()) {
@@ -59,10 +46,26 @@ public class StringWriterDemo {
 //                batch.reset();
 //            }
 //        }
-//        int row = batch.size++;
-//        byte[] buffer = "ab".getBytes(StandardCharsets.UTF_8);
-//        x.setRef(row, buffer, 0, buffer.length);
-//        //以下测试是为了StringReaderDemo使用searchArgument，稀疏索引：只能按照rowgroup（10000条数据）来过滤
+
+
+        //以下测试是为了StringReaderDemo使用searchArgument，稀疏索引：只能按照rowgroup（10000条数据）来过滤
+        int row = batch.size++;
+        byte[] buffer = "ab".getBytes(StandardCharsets.UTF_8);
+        x.setRef(row, buffer, 0, buffer.length);
+        row = batch.size++;
+        buffer = "b".getBytes(StandardCharsets.UTF_8);
+        x.setRef(row, buffer, 0, buffer.length);
+        for (int i = 0; i < 40000; i++) {
+            row = batch.size++;
+            buffer = "a".getBytes(StandardCharsets.UTF_8);
+            x.setRef(row, buffer, 0, buffer.length);
+            // If the batch is full, write it out and start over.
+            if (batch.size == batch.getMaxSize()) {
+                writer.addRowBatch(batch);
+                batch.reset();
+            }
+        }
+        //以下测试是为了StringReaderDemo使用searchArgument，稀疏索引：只能按照rowgroup（10000条数据）来过滤
 
         if (batch.size != 0) {
             writer.addRowBatch(batch);

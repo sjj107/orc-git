@@ -32,7 +32,10 @@ public class StringReaderDemo {
         // Read the row data
         VectorizedRowBatch batch = readSchema.createRowBatch();
         RecordReader rowIterator = reader.rows(reader.options()
-//                .searchArgument(SearchArgumentFactory.newBuilder().equals("x", PredicateLeaf.Type.STRING, "ab").build(), new String[]{"x"})
+                .searchArgument(SearchArgumentFactory.newBuilder().equals("x", PredicateLeaf.Type.STRING, "ab").build(), new String[]{"x"})
+//                .searchArgument(SearchArgumentFactory.newBuilder().in("x", PredicateLeaf.Type.STRING,new String[]{"ab","b"}).build(), new String[]{"x"})
+//                .searchArgument(SearchArgumentFactory.newBuilder().in("x", PredicateLeaf.Type.STRING,new String[]{"c","ab"}).build(), new String[]{"x"})
+//                .searchArgument(SearchArgumentFactory.newBuilder().startOr().equals("x", PredicateLeaf.Type.STRING, "ab").equals("x", PredicateLeaf.Type.STRING, "c").end().build(), new String[]{"x"})
                 .schema(readSchema));
         BytesColumnVector x = (BytesColumnVector) batch.cols[0];
         int num = 0;
