@@ -912,9 +912,9 @@ public class RecordReaderImpl implements RecordReader {
                                    OrcProto.BloomFilterIndex[] bloomFilterIndices,
                                    boolean returnNone) throws IOException {
       long rowsInStripe = stripe.getNumberOfRows();
-      int groupsInStripe = (int) ((rowsInStripe + rowIndexStride - 1) / rowIndexStride);
+      int groupsInStripe = (int) ((rowsInStripe + rowIndexStride - 1) / rowIndexStride);//sjj 一个strip中有多少个行组
       boolean[] result = new boolean[groupsInStripe]; // TODO: avoid alloc?
-      TruthValue[] leafValues = new TruthValue[sargLeaves.size()];
+      TruthValue[] leafValues = new TruthValue[sargLeaves.size()];//sjj 逻辑操作的潜在结果集。
       boolean hasSelected = false;
       boolean hasSkipped = false;
       TruthValue[] exceptionAnswer = new TruthValue[leafValues.length];
@@ -930,7 +930,7 @@ public class RecordReaderImpl implements RecordReader {
             if (indexes[columnIx] == null) {
               throw new AssertionError("Index is not populated for " + columnIx);
             }
-            OrcProto.RowIndexEntry entry = indexes[columnIx].getEntry(rowGroup);
+            OrcProto.RowIndexEntry entry = indexes[columnIx].getEntry(rowGroup);//sjj 获取指定字段的指定行组的rowindex
             if (entry == null) {
               throw new AssertionError("RG is not populated for " + columnIx + " rg " + rowGroup);
             }
