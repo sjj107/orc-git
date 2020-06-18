@@ -407,7 +407,7 @@ public class ReaderImpl implements Reader {
                                         int psLen,
                                         ByteBuffer buffer) throws IOException {
     int magicLength = OrcFile.MAGIC.length();
-    int fullLength = magicLength + 1;
+    int fullLength = magicLength + 1;//sjj todo 为什么要加一
     if (psLen < fullLength || buffer.remaining() < fullLength) {
       throw new FileFormatException("Malformed ORC file " + path +
           ". Invalid postscript length " + psLen);
@@ -665,12 +665,12 @@ public class ReaderImpl implements Reader {
       //read last bytes into buffer to get PostScript
       int readSize = (int) Math.min(size, DIRECTORY_SIZE_GUESS);
       buffer = new BufferChunk(size - readSize, readSize);
-      read(file, buffer);
+      read(file, buffer);//sjj 将文件中的内容加载到buffer中
 
       //read the PostScript
       //get length of PostScript
       ByteBuffer bb = buffer.getData();
-      int psLen = bb.get(readSize - 1) & 0xff;
+      int psLen = bb.get(readSize - 1) & 0xff;//sjj 得到postscript的长度
       ensureOrcFooter(file, path, psLen, bb);
       long psOffset = size - 1 - psLen;
       ps = extractPostScript(buffer, path, psLen, psOffset);
