@@ -87,17 +87,17 @@ public class WriterImpl implements WriterInternal, MemoryManager.Callback {
   private static final int MIN_ROW_INDEX_STRIDE = 1000;
 
   private final Path path;
-  private final long stripeSize;
-  private final int rowIndexStride;
+  private final long stripeSize;//sjj 每个stripe的大小
+  private final int rowIndexStride;//sjj 每个rowgroup有多少条数据
   private final TypeDescription schema;
   private final PhysicalWriter physicalWriter;
   private final OrcFile.WriterVersion writerVersion;
   private final StreamOptions unencryptedOptions;
 
   private long rowCount = 0;
-  private long rowsInStripe = 0;
+  private long rowsInStripe = 0;//sjj 当前stripe中的数据量
   private long rawDataSize = 0;
-  private int rowsInIndex = 0;
+  private int rowsInIndex = 0;//sjj 当前rowgroup中的数据量
   private long lastFlushOffset = 0;
   private int stripesAtLastFlush = -1;
   private final List<OrcProto.StripeInformation> stripes =
@@ -109,8 +109,8 @@ public class WriterImpl implements WriterInternal, MemoryManager.Callback {
   private final MemoryManager memoryManager;
   private long previousAllocation = -1;
   private long memoryLimit;
-  private final long ROWS_PER_CHECK;
-  private long rowsSinceCheck = 0;
+  private final long ROWS_PER_CHECK;//sjj 每多少条数据检查一次内存
+  private long rowsSinceCheck = 0;//sjj 待检查的数据条数
   private final OrcFile.Version version;
   private final Configuration conf;
   private final OrcFile.WriterCallback callback;

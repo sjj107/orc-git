@@ -49,7 +49,7 @@ public abstract class StringBaseTreeWriter extends TreeWriterBase {
   protected final DynamicIntArray rows = new DynamicIntArray();//sjj 字段下标信息
   protected final PositionedOutputStream directStreamOutput;//直接输出的流
   private final List<OrcProto.RowIndexEntry> savedRowIndex =
-      new ArrayList<>();
+      new ArrayList<>();//sjj 每一个rowgroup的统计信息和位置信息
   private final boolean buildIndex;
   private final List<Long> rowIndexValueCount = new ArrayList<>();
   // If the number of keys in a dictionary is greater than this fraction of
