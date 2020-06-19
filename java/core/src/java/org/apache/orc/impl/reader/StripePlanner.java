@@ -328,7 +328,7 @@ public class StripePlanner {
         bloomFilterKinds.length);
     BufferChunkList ranges = planIndexReading(sargColumns);
     dataReader.readFileData(ranges, false);
-    OrcProto.RowIndex[] indexes = output.getRowGroupIndex();
+    OrcProto.RowIndex[] indexes = output.getRowGroupIndex();//sjj stripe下所有rowgroup的统计信息和位置信息
     OrcProto.BloomFilterIndex[] blooms = output.getBloomFilterIndex();
     for(StreamInformation stream: indexStreams) {
       int column = stream.column;

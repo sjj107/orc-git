@@ -68,17 +68,17 @@ public class RecordReaderImpl implements RecordReader {
   private static final boolean isLogDebugEnabled = LOG.isDebugEnabled();
   protected final Path path;
   private final long firstRow;
-  private final List<StripeInformation> stripes = new ArrayList<>();
+  private final List<StripeInformation> stripes = new ArrayList<>();//sjj 需要查询的stripe信息
   private OrcProto.StripeFooter stripeFooter;
   private final long totalRowCount;
   protected final TypeDescription schema;
   // the file included columns indexed by the file's column ids.
   private final boolean[] fileIncluded;
   private final long rowIndexStride;
-  private long rowInStripe = 0;
+  private long rowInStripe = 0;//sjj 当前stripe读取了多少行
   private int currentStripe = -1;
   private long rowBaseInStripe = 0;
-  private long rowCountInStripe = 0;
+  private long rowCountInStripe = 0;//sjj 当前stripe共有多少条记录
   private final TreeReaderFactory.TreeReader reader;
   private final OrcIndex indexes;
   private final SargApplier sargApp;
