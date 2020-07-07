@@ -28,14 +28,17 @@ public class StringReaderDemo {
 
         // Pick the schema we want to read using schema evolution
         TypeDescription readSchema =
-                TypeDescription.fromString("struct<x:string>");
+                TypeDescription.fromString("struct<x:string,y:int>");
         // Read the row data
         VectorizedRowBatch batch = readSchema.createRowBatch();
         RecordReader rowIterator = reader.rows(reader.options()
-                .searchArgument(SearchArgumentFactory.newBuilder().equals("x", PredicateLeaf.Type.STRING, "ab").build(), new String[]{"x"})
+//                .searchArgument(SearchArgumentFactory.newBuilder().equals("x", PredicateLeaf.Type.STRING, "ab").build(), new String[]{"x"})
 //                .searchArgument(SearchArgumentFactory.newBuilder().in("x", PredicateLeaf.Type.STRING,new String[]{"ab","b"}).build(), new String[]{"x"})
 //                .searchArgument(SearchArgumentFactory.newBuilder().in("x", PredicateLeaf.Type.STRING,new String[]{"c","ab"}).build(), new String[]{"x"})
 //                .searchArgument(SearchArgumentFactory.newBuilder().startOr().equals("x", PredicateLeaf.Type.STRING, "ab").equals("x", PredicateLeaf.Type.STRING, "c").end().build(), new String[]{"x"})
+//                .searchArgument(SearchArgumentFactory.newBuilder().startAnd().equals("x", PredicateLeaf.Type.STRING, "abc").equals("y", PredicateLeaf.Type.LONG, -1L).end().build(), new String[]{"x","y"})
+                .searchArgument(SearchArgumentFactory.newBuilder().startAnd().equals("x", PredicateLeaf.Type.STRING, "d").between("y", PredicateLeaf.Type.LONG, -9L,-1L).end().build(), new String[]{"x","y"})
+//                .searchArgument(SearchArgumentFactory.newBuilder().equals("y", PredicateLeaf.Type.LONG, -2L).build(), new String[]{"y"})
                 .schema(readSchema));
         BytesColumnVector x = (BytesColumnVector) batch.cols[0];
         int num = 0;
