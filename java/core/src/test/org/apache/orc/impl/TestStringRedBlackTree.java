@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.apache.hadoop.io.DataOutputBuffer;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
 import org.junit.Test;
 
 /**
@@ -109,6 +110,14 @@ public class TestStringRedBlackTree {
     }
   }
 
+  private static class SjjVisitor implements StringRedBlackTree.Visitor {
+
+    @Override
+    public void visit(StringRedBlackTree.VisitorContext context) throws IOException {
+
+    }
+  }
+
   private static class MyVisitor implements StringRedBlackTree.Visitor {
     private final String[] words;
     private final int[] order;
@@ -150,11 +159,27 @@ public class TestStringRedBlackTree {
   }
 
   @Test
+  public void test() throws Exception {
+    StringRedBlackTree tree = new StringRedBlackTree(5);
+    assertEquals(0, tree.add("e"));
+    assertEquals(1, tree.add("a"));
+    assertEquals(2, tree.add("d"));
+    assertEquals(3, tree.add("c"));
+    assertEquals(4, tree.add("b"));
+
+    checkContents(tree, new int[]{1,4,3,2,0},
+            "a", "b", "c", "d", "e");
+  }
+
+  @Test
   public void test1() throws Exception {
     StringRedBlackTree tree = new StringRedBlackTree(5);
     assertEquals(0, tree.getSizeInBytes());
     checkTree(tree);
     assertEquals(0, tree.add("owen"));
+    Text text = new Text();
+    tree.getText(text,0);
+    System.out.println(text);
     checkTree(tree);
     assertEquals(1, tree.add("ashutosh"));
     checkTree(tree);
